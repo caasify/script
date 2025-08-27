@@ -10,7 +10,7 @@ fi
 action=$(echo "$1" | awk '{print tolower($0)}')
 
 case "$action" in
-  trojan)
+  "vpn trojan")
     if [ $# -ne 3 ]; then
       echo "Error: trojan requires <secret> <hostname>"
       echo "Usage: bash launch.sh trojan <secret> <hostname>"
