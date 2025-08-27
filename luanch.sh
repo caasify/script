@@ -1,21 +1,36 @@
 #!/bin/bash
 
-# Check if an argument is provided
 if [ -z "$1" ]; then
-  echo "Usage: bash launch.sh [trojan|mikrotik]"
+  echo "Usage:"
+  echo "  bash launch.sh trojan <secret> <hostname>"
+  echo "  bash launch.sh mikrotik <secret>"
   exit 1
 fi
 
 case "$1" in
   trojan)
-    SCRIPT_URL="https://raw.githubusercontent.com/caasify/script/main/vpn/xui/trojan.sh"
+    if [ $# -ne 3 ]; then
+      echo "Error: trojan requires <secret> <hostname>"
+      echo "Usage: bash launch.sh trojan <secret> <hostname>"
+      exit 1
+    fi
+    SCRIPT_URL="https://raw.githubusercontent.com/caasify/script/refs/heads/main/vpn/xui/trojan.sh"
+    EXTRA_ARGS="${@:2}" # secret + hostname
     ;;
   mikrotik)
-    SCRIPT_URL="https://raw.githubusercontent.com/caasify/script/main/mikrotik/mikrotik.sh"
+    if [ $# -ne 2 ]; then
+      echo "Error: mikrotik requires <secret>"
+      echo "Usage: bash launch.sh mikrotik <secret>"
+      exit 1
+    fi
+    SCRIPT_URL="https://raw.githubusercontent.com/caasify/script/refs/heads/main/mikrotik/mikrotik.sh"
+    EXTRA_ARGS="${@:2}" # secret
     ;;
   *)
     echo "Invalid option: $1"
-    echo "Usage: bash launch.sh [trojan|mikrotik]"
+    echo "Usage:"
+    echo "  bash launch.sh trojan <secret> <hostname>"
+    echo "  bash launch.sh mikrotik <secret>"
     exit 1
     ;;
 esac
@@ -29,7 +44,7 @@ if [ $? -ne 0 ]; then
 fi
 
 chmod +x "$TMP_SCRIPT"
-bash "$TMP_SCRIPT"
+bash "$TMP_SCRIPT" $EXTRA_ARGS
 
 # Clean up
 rm -f "$TMP_SCRIPT"
