@@ -7,7 +7,9 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-case "$1" in
+action=$(echo "$1" | awk '{print tolower($0)}')
+
+case "$action" in
   trojan)
     if [ $# -ne 3 ]; then
       echo "Error: trojan requires <secret> <hostname>"
