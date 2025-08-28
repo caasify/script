@@ -19,7 +19,7 @@ case "$action" in
     SCRIPT_URL="https://raw.githubusercontent.com/caasify/script/refs/heads/main/vpn/xui/trojan.sh"
     EXTRA_ARGS="${@:2}" # secret + hostname
     ;;
-  mikrotik)
+  "mikrotik chr")
     if [ $# -ne 2 ]; then
       echo "Error: mikrotik requires <secret>"
       echo "Usage: bash launch.sh mikrotik <secret>"
