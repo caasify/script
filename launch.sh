@@ -11,7 +11,7 @@ action=$(echo "$1" | awk '{print tolower($0)}')
 
 case "$action" in
   "vpn trojan")
-    if [ $# -ne 3 ]; then
+    if [ $# -lt 3 ]; then
       echo "Error: trojan requires <secret> <hostname>"
       echo "Usage: bash launch.sh trojan <secret> <hostname>"
       exit 1
@@ -20,7 +20,7 @@ case "$action" in
     EXTRA_ARGS="${@:2}" # secret + hostname
     ;;
   "mikrotik chr")
-    if [ $# -ne 2 ]; then
+    if [ $# -lt 3 ]; then
       echo "Error: mikrotik requires <secret>"
       echo "Usage: bash launch.sh mikrotik <secret>"
       exit 1
